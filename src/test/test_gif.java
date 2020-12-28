@@ -1,38 +1,81 @@
 package test;
 
-import gif.FactoryGif;
+import Ui.gif.FactoryGif;
+import Ui.gif.OneLoopGif;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class test_gif extends JFrame{
+    JPanel panel_test;
     test_gif(String title){
         super(title);
-        JPanel panel_test = new JPanel();
-        panel_test.setBackground(Color.RED);
-        add(panel_test);
-        JLabel gif = FactoryGif.get_label_gif("data/gif/witch/punch_witch.gif");
-        panel_test.add(gif);
+        Dimension dimension_screen = Toolkit.getDefaultToolkit().getScreenSize();
+        setPreferredSize(dimension_screen);
+        setLayout(new BorderLayout());
+        panel_test = new JPanel();
+        panel_test.setBackground(Color.WHITE);
+        add(panel_test,BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
+        JLabel gif = FactoryGif.get_loop_gif("data/gif/witch/fly_witch.gif");
+        panel_test.add(gif);
         setLocationRelativeTo(null);
         setVisible(true);
-        new Thread(){
+        addMouseListener(new MouseListener() {
             @Override
-            public void run(){
-                try {
-                    Thread.sleep(16 * 50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                JLabel gif = FactoryGif.get_label_gif("data/gif/witch/fly_witch.gif");
-                panel_test.removeAll();
-                panel_test.add(gif);
-                setVisible(true);
+            public void mouseClicked(MouseEvent e) {
             }
-        }.start();
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                System.out.println("je passe");
+                do_spell();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
+
+    public void do_spell(){
+        panel_test.removeAll();
+        OneLoopGif gif = FactoryGif.get_one_loop_gif("data/gif/witch/test_cast_witch.gif");
+        panel_test.add(gif);
+        panel_test.setVisible(true);
+        setVisible(true);
+        gif.addActionListener(e -> {
+            OneLoopGif gif1 = FactoryGif.get_one_loop_gif("data/gif/witch/test_shoot_witch.gif");
+            panel_test.removeAll();
+            panel_test.add(gif1);
+            panel_test.setVisible(true);
+            setVisible(true);
+            gif1.addActionListener(e1 -> {
+                JLabel gif11 = FactoryGif.get_loop_gif("data/gif/witch/fly_witch.gif");
+                panel_test.removeAll();
+                panel_test.add(gif11);
+                panel_test.setVisible(true);
+                setVisible(true);
+            });
+        });
+    }
+
     public static void main(String[] argv) {
-        SwingUtilities.invokeLater(() -> new test_gif("test gif").setVisible(true));
+        SwingUtilities.invokeLater(() -> new test_gif("test Ui.gif").setVisible(true));
     }
 }
