@@ -5,10 +5,8 @@ import Ui.gif.OneLoopGif;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class test_gif extends JFrame{
     JPanel panel_test;
@@ -26,7 +24,7 @@ public class test_gif extends JFrame{
         panel_test.add(gif);
         setLocationRelativeTo(null);
         setVisible(true);
-        addMouseListener(new MouseListener() {
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
             }
