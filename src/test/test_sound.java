@@ -1,8 +1,6 @@
 package test;
 
-import son.Sound;
-
-import javax.swing.*;
+import backend.son.Sound;
 
 public class test_sound {
     public static void main(String[] argv) {

@@ -35,7 +35,6 @@ public class test_gif extends JFrame{
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("je passe");
                 do_spell();
             }
 

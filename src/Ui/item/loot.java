@@ -1,8 +1,7 @@
 package Ui.item;
 
 import Ui.gif.FactoryGif;
-import Ui.gif.OneLoopGif;
-import son.Sound;
+import backend.son.Sound;
 
 import javax.swing.*;
 
