@@ -18,7 +18,7 @@ public class Score {
         for(int i=taille-1;i >=0;i--){
             this.nb[191 - i] = (byte) Character.getNumericValue(nb.charAt(taille- i- 1));
         }
-        setUnite(Unite.values()[taille / 3]);
+        setUnite(Unite.values()[(taille-1) / 3 ]);
     }
 
     public void add_score(Score score) {
@@ -33,7 +33,7 @@ public class Score {
         if (bit > taille) {
             taille = bit;
             nb[bit] = (byte) ((nb[bit] + value));
-            setUnite(Unite.values()[taille / 3]);
+            setUnite(Unite.values()[(taille-1) / 3]);
         } else {
             if (nb[bit] + value > 9) {
                 nb[bit] = (byte) ((nb[bit] + value) % 10);
@@ -60,19 +60,19 @@ public class Score {
     }
 
     public String get_short_nb() {
-        String short_nb = null;
+        String short_nb = "";
 
-        if (taille > unite.ordinal() * 3 - 2) {
-            short_nb = String.valueOf((nb[191 - unite.ordinal() * 3 - 2]));
+        if (taille > unite.ordinal() * 3 + 2) {
+            short_nb += String.valueOf((nb[191 - unite.ordinal() * 3 - 2]));
         }
-        if (taille > unite.ordinal() * 3 - 1) {
+        if (taille > unite.ordinal() * 3 + 1) {
             short_nb += String.valueOf((nb[191 - unite.ordinal() * 3 - 1]));
         }
         if (taille > unite.ordinal() * 3) {
             short_nb += String.valueOf((nb[191 - unite.ordinal() * 3]));
         }
         if (unite != Unite.$) {
-            short_nb += ',' + String.valueOf((nb[191 - unite.ordinal() * 3 + 1])) + String.valueOf((nb[unite.ordinal() * 3 + 2])) + String.valueOf((nb[unite.ordinal() * 3 + 3]));
+            short_nb += ',' + String.valueOf((nb[191 - unite.ordinal() * 3 + 1])) + String.valueOf((nb[191 -unite.ordinal() * 3 + 2])) + String.valueOf((nb[191 -unite.ordinal() * 3 + 3]));
         }
         return short_nb;
     }

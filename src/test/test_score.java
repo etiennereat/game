@@ -5,7 +5,7 @@ import backend.son.Sound;
 
 public class test_score {
     public static void main(String[] argv) {
-        Score test = new Score("12345678");
+        Score test = new Score("123456789");
         String affichage = test.get_short_nb();
         System.out.println(affichage+" "+test.getUnite());
         affichage = test.get_full_nb();
