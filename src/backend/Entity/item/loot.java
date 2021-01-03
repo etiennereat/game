@@ -1,15 +1,14 @@
-package Ui.item;
+package backend.Entity.item;
 
 import Ui.gif.FactoryGif;
+import backend.Entity.Entity;
 import backend.son.Sound;
 
 import javax.swing.*;
 
-public abstract class loot {
-    protected static JLabel label;
+public abstract class loot extends Entity {
     protected static int nbLootShow;
     protected String pathGif;
-    protected int x,y;
     protected etat_loot etat;
     protected Sound son;
 
@@ -42,14 +41,6 @@ public abstract class loot {
     }
 
 
-    public static JLabel getLabel() {
-        return label;
-    }
-
-    public static void setLabel(JLabel label) {
-        loot.label = label;
-    }
-
     public static int getNbLootShow() {
         return nbLootShow;
     }
@@ -69,20 +60,6 @@ public abstract class loot {
         this.pathGif = path_gif;
     }
 
-    public int getX() {
-        return x;
-    }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
 }
 
