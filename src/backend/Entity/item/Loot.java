@@ -4,19 +4,16 @@ import Ui.gif.FactoryGif;
 import backend.Entity.Entity;
 import backend.son.Sound;
 
-import javax.swing.*;
-
-public abstract class loot extends Entity {
+public abstract class Loot extends Entity {
     protected static int nbLootShow;
     protected String pathGif;
     protected etat_loot etat;
     protected Sound son;
 
-    public loot(int x,int y){
+    public Loot(int x,int y){
+        super(x, y);
         etat = etat_loot.INIT;
         incrementNbLootShow();
-        setX(x);
-        setY(y);
         setLabel(FactoryGif.get_loop_gif(pathGif));
     }
     public etat_loot getEtat() {
@@ -40,7 +37,6 @@ public abstract class loot extends Entity {
         return etat;
     }
 
-
     public static int getNbLootShow() {
         return nbLootShow;
     }
@@ -60,6 +56,9 @@ public abstract class loot extends Entity {
         this.pathGif = path_gif;
     }
 
+    //todo ?
+    public void nextStep(){
 
+    }
 }
 

@@ -1,13 +1,15 @@
 package backend.Entity;
 
-import backend.Entity.item.loot;
-
 import javax.swing.*;
 
-public class Entity {
+public abstract class Entity {
     protected int x,y;
     protected static JLabel label;
 
+    public Entity(int x,int y){
+        setX(x);
+        setY(y);
+    }
 
     public int getX() {
         return x;
@@ -30,7 +32,8 @@ public class Entity {
         return label;
     }
 
-    public static void setLabel(JLabel label) {
-        loot.label = label;
+    public void setLabel(JLabel label) {
+        Entity.label = label;
     }
+    public abstract void nextStep();
 }
