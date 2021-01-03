@@ -8,13 +8,11 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import static backend.Entity.Witch.etat_witch.INIT;
-
 
 public class test_gif_2 extends JFrame {
         JPanel panel_test;
         JLabel gif;
-        etat_witch etat = INIT;
+        etat_witch etat = etat_witch.INIT;
         int y=500;
         test_gif_2(String title) {
             super(title);
@@ -48,32 +46,30 @@ public class test_gif_2 extends JFrame {
                     }
                 }
             });
-            new Thread(){
-                public void run(){
-                    while(true){
-                        try {
-                            Thread.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        gif.setBounds(0, y,520,300);
-                        switch (etat) {
-                            case FALL:
-                                if (y != 500) {
-                                    y++;
-                                } else {
-                                    etat = etat_witch.HOVER;
-                                }
-                                break;
-                            case FLY:
-                                if (y != 0) {
-                                    y--;
-                                }
-                                break;
-                        }
+            new Thread(() -> {
+                while(true){
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    gif.setBounds(0, y,520,300);
+                    switch (etat) {
+                        case FALL:
+                            if (y != 500) {
+                                y++;
+                            } else {
+                                etat = etat_witch.HOVER;
+                            }
+                            break;
+                        case FLY:
+                            if (y != 0) {
+                                y--;
+                            }
+                            break;
                     }
                 }
-            }.start();
+            }).start();
         }
         public static void main(String[] argv) {
             SwingUtilities.invokeLater(() -> new test.test_gif_2("test Ui.gif").setVisible(true));
