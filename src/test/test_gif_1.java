@@ -8,9 +8,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class test_gif extends JFrame{
+public class test_gif_1 extends JFrame{
     JPanel panel_test;
-    test_gif(String title){
+    test_gif_1(String title){
         super(title);
         Dimension dimension_screen = Toolkit.getDefaultToolkit().getScreenSize();
         setPreferredSize(dimension_screen);
@@ -73,6 +73,6 @@ public class test_gif extends JFrame{
     }
 
     public static void main(String[] argv) {
-        SwingUtilities.invokeLater(() -> new test_gif("test Ui.gif").setVisible(true));
+        SwingUtilities.invokeLater(() -> new test_gif_1("test Ui.gif").setVisible(true));
     }
 }
