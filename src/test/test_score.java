@@ -1,7 +1,6 @@
 package test;
 
 import backend.score.Score;
-import backend.son.Sound;
 
 public class test_score {
     public static void main(String[] argv) throws Score.ScoreException {
