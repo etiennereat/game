@@ -2,10 +2,15 @@ package backend.score;
 
 //Biginteger
 public class Score {
+    public class ScoreException extends Exception {
+        public ScoreException(String errorMessage) {
+            super(errorMessage);
+        }
+    }
     private byte[] nb;
     private Unite unite;
     private int taille;
-    private int TAILLE_MAX = 193;
+    private int TAILLE_MAX = 219;
 
     public Score() {
         init_nb();
@@ -13,29 +18,38 @@ public class Score {
         setUnite(Unite.$);
     }
 
-    public Score(String nb){
+    public Score(String nb) throws ScoreException {
         init_nb();
         taille = nb.length();
-        for(int i=taille-1;i >=0;i--){
-            this.nb[TAILLE_MAX - 1 - i] = (byte) Character.getNumericValue(nb.charAt(taille- i- 1));
+        try{
+            for (int i = taille - 1; i >= 0; i--) {
+                this.nb[TAILLE_MAX - 1 - i] = (byte) Character.getNumericValue(nb.charAt(taille - i - 1));
+            }
+        }
+        catch (Exception e){
+            throw new ScoreException("init Score with size "+taille+"  bigger than "+TAILLE_MAX);
         }
         setUnite(Unite.values()[(taille-1) / 3 ]);
     }
 
-    public void add_score(Score score) {
+    public void add_score(Score score) throws ScoreException {
         for (int i = TAILLE_MAX - score.taille; i < TAILLE_MAX; i++){
             add_bit(score.nb[i], i);
         }
     }
 
-    //bit entre 0 et TAILLE_MAX
-    //value entre 1 et 9
-    private void add_bit(byte value, int bit) {
+    private void add_bit(byte value, int bit) throws ScoreException {
         if(value==0){
             return;
         }
-        if ((192 - bit) + 1 > taille) {
-            taille = 192 - bit + 1 ;
+        if(bit > TAILLE_MAX - 1 || bit < 0){
+            throw new ScoreException("adding bit out of range");
+        }
+        if(value > 9 || value < 0){
+            throw new ScoreException("adding bit value outside the set [0;9]");
+        }
+        if ((TAILLE_MAX - bit) > taille) {
+            taille = TAILLE_MAX - bit ;
             nb[bit] = (byte) ((nb[bit] + value));
             setUnite(Unite.values()[(taille-1) / 3]);
         } else {
@@ -47,7 +61,38 @@ public class Score {
             }
         }
     }
+    public void sub_score(Score score) throws ScoreException {
+        for (int i = TAILLE_MAX - score.taille; i < TAILLE_MAX; i++){
+            sub_bit(score.nb[i], i);
+        }
+        while(nb[TAILLE_MAX - taille ] == 0 && taille > 1){
+            taille--;
+        }
+        setUnite(Unite.values()[(taille-1) / 3 ]);
+    }
 
+    private void sub_bit(byte value, int bit) throws ScoreException {
+        if(value==0){
+            return;
+        }
+        if(bit > TAILLE_MAX - 1 || bit < 0){
+            throw new ScoreException("subing bit out of range");
+        }
+        if(value > 9 || value < 0){
+            throw new ScoreException("subing bit value outside the set [0;9]");
+        }
+        if(bit < TAILLE_MAX - taille){
+            throw new ScoreException("Negative score");
+        }
+        if (nb[bit] - value < 0) {
+            nb[bit] = (byte) (nb[bit]+ 10 - value);
+            sub_bit((byte) 1, bit - 1);
+        }
+        else{
+            nb[bit] = (byte) ((nb[bit] - value));
+        }
+        
+    }
     private void init_nb() {
         nb = new byte[TAILLE_MAX];
         for (int i = 0; i < TAILLE_MAX; i++) {

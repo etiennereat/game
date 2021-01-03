@@ -1,6 +1,6 @@
 package backend.score;
 
-//0, 10^3,......, 10^192.
+//0, 10^3,......, 10^219.
 public enum Unite {
     $, K, M, G, T, P, E, Z, Y,
       KK,KM,KG,KT,KP,KE,KZ,KY,
