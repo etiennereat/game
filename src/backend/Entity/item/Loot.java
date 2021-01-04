@@ -14,7 +14,6 @@ public abstract class Loot extends Entity {
         super(x, y);
         etat = etat_loot.INIT;
         incrementNbLootShow();
-        setLabel(FactoryGif.get_loop_gif(pathGif));
     }
     public etat_loot getEtat() {
         return etat;

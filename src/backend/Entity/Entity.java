@@ -4,8 +4,6 @@ import javax.swing.*;
 
 public abstract class Entity {
     protected int x,y;
-    protected static JLabel label;
-
     public Entity(int x,int y){
         setX(x);
         setY(y);
@@ -28,12 +26,5 @@ public abstract class Entity {
     }
 
 
-    public static JLabel getLabel() {
-        return label;
-    }
-
-    public void setLabel(JLabel label) {
-        Entity.label = label;
-    }
     public abstract void nextStep();
 }
