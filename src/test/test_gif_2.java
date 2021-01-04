@@ -49,7 +49,7 @@ public class test_gif_2 extends JFrame {
             new Thread(() -> {
                 while(true){
                     try {
-                        Thread.sleep(1);
+                        Thread.sleep(2);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
