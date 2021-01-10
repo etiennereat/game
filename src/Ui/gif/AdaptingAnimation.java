@@ -84,8 +84,12 @@ public class AdaptingAnimation extends SwingWorker<Integer,Integer>{
     public JLabel getLabel(){
         return label_anime;
     }
+
     public void set_delay(int delay){
         this.delay = delay;
+    }
+    public int get_delay(){
+        return delay;
     }
 
     public void cancel_anime(){
