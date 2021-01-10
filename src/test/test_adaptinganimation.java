@@ -2,11 +2,11 @@ package test;
 
 import Ui.gif.AdaptingAnimation;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 
 public class test_adaptinganimation extends JFrame{
     public test_adaptinganimation(String title) {
@@ -15,10 +15,31 @@ public class test_adaptinganimation extends JFrame{
         setPreferredSize(dimension_screen);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         AdaptingAnimation animation = new AdaptingAnimation("witch/fly",true,50);
-        animation.execute();
         add(animation.getLabel());
+        animation.addActionListener(e -> {
+            System.out.println("je passe");
+        });
+        animation.execute();
         pack();
         setVisible(true);
+        final boolean[] freeze = {false};
+        addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(!freeze[0]){
+                    animation.freeze_anime();
+                    freeze[0] = !freeze[0];
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(freeze[0]) {
+                    animation.unfreeze_anime();
+                }
+                freeze[0] = !freeze[0];
+            }
+        });
+
     }
 
 

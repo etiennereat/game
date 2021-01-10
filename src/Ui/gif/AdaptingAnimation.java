@@ -2,12 +2,14 @@ package Ui.gif;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class AdaptingAnimation extends SwingWorker<Integer,Integer> {
+public class AdaptingAnimation extends SwingWorker<Integer,Integer>{
 
     private JLabel label_anime;
 
@@ -22,6 +24,7 @@ public class AdaptingAnimation extends SwingWorker<Integer,Integer> {
     private Boolean loop=true;
     private state_anime state;
 
+    private ArrayList<ActionListener> listenerList;
 
     public AdaptingAnimation(String anime_name,Boolean loop,int delay) {
         lock = new ReentrantLock();
@@ -31,6 +34,7 @@ public class AdaptingAnimation extends SwingWorker<Integer,Integer> {
         this.loop=loop;
         state =state_anime.INIT;
         set_delay(delay);
+        listenerList = new ArrayList<ActionListener>();
     }
 
 
@@ -38,7 +42,7 @@ public class AdaptingAnimation extends SwingWorker<Integer,Integer> {
         while (state != state_anime.END){
             //wait if anime is FREEZE
             lock.lock();
-            assert(state == state_anime.RUNNING);
+            //assert(state == state_anime.RUNNING);
             lock.unlock();
             load_next_frame();
             label_anime.setIcon(current_frame);
@@ -86,15 +90,18 @@ public class AdaptingAnimation extends SwingWorker<Integer,Integer> {
 
     public void cancel_anime(){
         update_state(state_anime.END);
+        fireActionPerformed();
     }
 
     public void freeze_anime(){
         lock.lock();
         update_state(state_anime.FREEZE);
+        System.out.println("je freeze");
     }
     public void unfreeze_anime(){
-        lock.unlock();
         update_state(state_anime.RUNNING);
+        lock.unlock();
+        System.out.println("je défreeze");
     }
 
     private void update_state(state_anime new_state){
@@ -107,6 +114,23 @@ public class AdaptingAnimation extends SwingWorker<Integer,Integer> {
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + state);
+        }
+    }
+
+    public void addActionListener(ActionListener listener) {
+        listenerList.add( listener);
+    }
+
+    public void removeActionListener(ActionListener listener) {
+        listenerList.remove(listener);
+    }
+
+    private void fireActionPerformed() {
+        if (listenerList.size() > 0) {
+            ActionEvent evt = new ActionEvent(this, 0, "stopped");
+            for (ActionListener listener : listenerList) {
+                listener.actionPerformed(evt);
+            }
         }
     }
 
