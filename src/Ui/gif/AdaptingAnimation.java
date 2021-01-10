@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static java.lang.Integer.max;
+
+
 public class AdaptingAnimation extends SwingWorker<Integer,Integer>{
 
     private JLabel label_anime;
@@ -58,7 +61,7 @@ public class AdaptingAnimation extends SwingWorker<Integer,Integer>{
     //la fonction qui lance l anime en tache de fond
     @Override
     protected Integer doInBackground() throws Exception {
-        update_state(state_anime.RUNNING);
+        state = state_anime.RUNNING;
         return anime();
     }
 
@@ -74,8 +77,8 @@ public class AdaptingAnimation extends SwingWorker<Integer,Integer>{
                 load_next_frame();
             }
             else{
-                cancel_anime();
                 System.out.println("fin de l'animation !");
+                cancel_anime();
             }
         }
 
@@ -86,7 +89,8 @@ public class AdaptingAnimation extends SwingWorker<Integer,Integer>{
     }
 
     public void set_delay(int delay){
-        this.delay = delay;
+
+        this.delay = max(delay,10);
     }
     public int get_delay(){
         return delay;

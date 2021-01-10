@@ -15,6 +15,7 @@ public class test_adaptinganimation extends JFrame{
         setPreferredSize(dimension_screen);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         AdaptingAnimation animation = new AdaptingAnimation("witch/fly",true,50);
+
         add(animation.getLabel());
         animation.addActionListener(e -> {
             System.out.println("je passe");
@@ -30,6 +31,7 @@ public class test_adaptinganimation extends JFrame{
                     animation.freeze_anime();
                     freeze[0] = !freeze[0];
                 }
+                animation.set_delay(animation.get_delay()-5);
             }
             @Override
             public void keyReleased(KeyEvent e) {

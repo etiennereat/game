@@ -1,5 +1,6 @@
 package test;
 
+import Ui.gif.AdaptingAnimation;
 import Ui.gif.FactoryGif;
 import Ui.gif.OneLoopGif;
 
@@ -10,6 +11,7 @@ import java.awt.event.MouseEvent;
 
 public class test_gif_1 extends JFrame{
     JPanel panel_test;
+    AdaptingAnimation curentanime;
     test_gif_1(String title){
         super(title);
         Dimension dimension_screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -20,8 +22,9 @@ public class test_gif_1 extends JFrame{
         add(panel_test,BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        JLabel gif = FactoryGif.get_loop_gif("data/gif/witch/fly_witch.gif");
-        panel_test.add(gif);
+        curentanime = new AdaptingAnimation("witch/fly",true,50);
+        panel_test.add(curentanime.getLabel());
+        curentanime.execute();
         setLocationRelativeTo(null);
         setVisible(true);
         addMouseListener(new MouseAdapter() {
@@ -52,20 +55,21 @@ public class test_gif_1 extends JFrame{
 
     public void do_spell(){
         panel_test.removeAll();
-        OneLoopGif gif = FactoryGif.get_one_loop_gif("data/gif/witch/test_cast_witch.gif");
-        panel_test.add(gif);
+        AdaptingAnimation anime = new AdaptingAnimation("witch/cast",false,100);
+        panel_test.add(anime.getLabel());
+        anime.execute();
         panel_test.setVisible(true);
         setVisible(true);
-        gif.addActionListener(e -> {
-            OneLoopGif gif1 = FactoryGif.get_one_loop_gif("data/gif/witch/test_shoot_witch.gif");
+        anime.addActionListener(e -> {
             panel_test.removeAll();
-            panel_test.add(gif1);
+            AdaptingAnimation anime2 = new AdaptingAnimation("witch/shoot",false,50);
+            panel_test.add(anime2.getLabel());
+            anime2.execute();
             panel_test.setVisible(true);
             setVisible(true);
-            gif1.addActionListener(e1 -> {
-                JLabel gif11 = FactoryGif.get_loop_gif("data/gif/witch/fly_witch.gif");
+            anime2.addActionListener(e1 -> {
                 panel_test.removeAll();
-                panel_test.add(gif11);
+                panel_test.add(curentanime.getLabel());
                 panel_test.setVisible(true);
                 setVisible(true);
             });
