@@ -31,6 +31,22 @@ public class Score {
         }
         setUnite(Unite.values()[(taille-1) / 3 ]);
     }
+    public Score(int value,Unite u) throws ScoreException {
+        init_nb();
+        String conversion = Integer.toString(value);
+        int nbsize = conversion.length();
+        this.taille = u.ordinal() * 3 + nbsize;
+        setUnite(Unite.values()[(taille-1) / 3 ]);
+        try{
+            for (int i = taille - 1; i >= unite.ordinal() * 3; i--) {
+                this.nb[TAILLE_MAX - 1 - i] = (byte) Character.getNumericValue(conversion.charAt(nbsize-(i - u.ordinal() * 3) -1));
+            }
+        }
+        catch (Exception e){
+            throw new ScoreException("init Score with size "+taille+"  bigger than "+TAILLE_MAX);
+        }
+
+    }
 
     public void add_score(Score score) throws ScoreException {
         for (int i = TAILLE_MAX - score.taille; i < TAILLE_MAX; i++){
@@ -153,9 +169,9 @@ public class Score {
             science_nb += String.valueOf(nb[TAILLE_MAX - 1 - taille + 4]);
         }
 
-        science_nb += "×10";
         if(taille > 1){
-            science_nb +=replace_pow(String.valueOf(taille));
+            science_nb += "×10";
+            science_nb +=replace_pow(String.valueOf(taille-1));
         }
         science_nb += " "+Unite.$.name();
         return science_nb;
