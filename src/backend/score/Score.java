@@ -10,7 +10,7 @@ public class Score {
     private byte[] nb;
     private Unite unite;
     private int taille;
-    private int TAILLE_MAX = 219;
+    private int TAILLE_MAX = (Unite.values().length) * 3;
 
     public Score() {
         init_nb();
